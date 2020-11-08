@@ -1,0 +1,33 @@
+CREATE DATABASE RESTAURANT;
+USE RESTAURANT;
+CREATE TABLE menu
+(MenuID int AUTO_INCREMENT PRIMARY KEY,
+menu_item VARCHAR(255),
+price int(10));
+CREATE TABLE orders
+(OrderID int AUTO_INCREMENT PRIMARY KEY,
+menuID int,
+quantity int,
+FOREIGN KEY (menuID) REFERENCES menu(MenuID));
+CREATE TABLE tables
+(tableID int AUTO_INCREMENT PRIMARY KEY,
+numberOfPeople int
+);
+CREATE TABLE Customer
+(CustomerID int AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(255),
+last_name VARCHAR(255),
+phone_num VARCHAR(20),
+OrderID int,
+tableID int,
+FOREIGN KEY (OrderID) REFERENCES orders(OrderID),
+FOREIGN KEY (tableID) REFERENCES tables(tableID)
+);
+INSERT INTO menu(menu_item, price)
+VALUES("Coffee and Donuts", 12);
+INSERT INTO menu(menu_item, price)
+VALUES("Breakfast Corn Dogs", 12);
+INSERT INTO menu(menu_item, price)
+VALUES("Pancakes", 12);
+INSERT INTO menu(menu_item, price)
+VALUES("Deviled Eggs", 12);
