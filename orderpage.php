@@ -1,4 +1,7 @@
-<?php require('../../connect/dbconnect.inc.php') ?>
+<?php 
+require('../../connect/dbconnect.inc.php');
+require('handle_form.php');
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,18 +11,16 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <form action="" method="POST">
+        <form action="orderpage.php" method="POST">
             <fieldset>
             <p>
-                <label>Customer Name:
+                <label>Customer Name:</label>
                     <input type="text" name="name" size="20" maxlength="20">
-                </label>
             </p>
             <p>
-                <!-- menu take from https://www.geistnashville.com/brunch -->
-                <label for="menu"> Menu: </label>
-                <br><small>Small Plates</small><br>
-
+                <!-- menu taken from https://www.geistnashville.com/brunch -->
+                <label> Menu: </label>
+                <br>
                 <?php 
                 $query1 = "SELECT menu_item, price FROM menu";
                 $stmt = $conn->prepare($query1);
@@ -28,20 +29,25 @@
                 if($result->num_rows > 0){
                     while($row = $result->fetch_assoc()){
                 ?>
-                <input type="checkbox" name="menu[]" value="<?php echo $row["menu_item"]?>"> <?php echo $row["menu_item"]." $".$row["price"]?>               
+                <input type="checkbox" name="menu[]" value="<?php echo $row["menu_item"]; ?>"> <?php echo $row["menu_item"]." $".$row["price"]; ?>               
                 <br>
                 <?php 
                       }
                 }
                 ?>
-                <br><small>Drinks</small><br>
-                <input type="checkbox" name="menu[]" value="Coffee"> Coffee $2.50<br>
-                <input type="checkbox" name="menu[]" value="Tea"> Tea $2.00<br>
-                <br>
             </p>
             <p>
                 <input type="submit" name="submit" value="order!">
             </p>
+                <?php if(count($errors)>0): ?>
+                    <ul>
+                        <?php foreach($errors as $error => $description): ?>
+                        <li>
+                            <?php echo $description ?>
+                        </li>
+                        <?php endforeach;?>
+                    </ul>
+                <?php endif; ?>
             <p>
                 <!-- use cookies for this -->
                 <!-- if user is logged in, show: -->
