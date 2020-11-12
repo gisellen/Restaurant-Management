@@ -13,16 +13,16 @@ require('handle_form.php');
         <link rel="stylesheet" href="">
     </head>
     <body>
-    <form action="" method="">
-        CONFIRM DETAILS: <br>
-        CUSTOMER NAME: 
-            <?php 
-            echo $_COOKIE['name']."<br>";
-            foreach(json_decode($_COOKIE['order']) as $item){
-                echo $item."<br>";
-            }
-        ?>
-       </form>
+            <fieldset>
+                <h1> CONFIRM DETAILS </h1>
+                <h2> NAME: <?php echo $_COOKIE['name']."<br>"; ?> </h2>
+                Order: <br>
+                    <?php 
+                    foreach(json_decode($_COOKIE['order']) as $item){
+                        echo $item."<br>";
+                    }
+                ?>
+            </fieldset>
         <script src="" async defer></script>
     </body>
 </html>

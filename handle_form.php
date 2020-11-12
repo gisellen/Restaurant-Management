@@ -1,4 +1,5 @@
 <?php
+require('../../connect/dbconnect.inc.php');
 $errors = [];
 if(isset($_POST['submit'])){
     $name = htmlspecialchars($_POST['name']);
@@ -7,6 +8,14 @@ if(isset($_POST['submit'])){
         $converted_menu = json_encode($menu);
         setcookie("name", $name, time()+3600*2, "", "localhost");
         setcookie("order", $converted_menu, time()+3600*2, "", "localhost");
+
+        //GET CUSTOMER INFO INTO customer table (WORK IN PROGRESS)
+        $query = "INSERT INTO customer (first_name) VALUES (?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
     }
     else{
         $menu = false;

@@ -18,12 +18,16 @@ require('handle_form.php');
                     <input type="text" name="name" size="20" maxlength="20">
             </p>
             <p>
+                <label>Telephone Number: </label>
+                <input type="text" name="phone number" size="20" maxlength="20">
+            </p>
+            <p>
                 <!-- menu taken from https://www.geistnashville.com/brunch -->
                 <label> Menu: </label>
                 <br>
                 <?php 
-                $query1 = "SELECT menu_item, price FROM menu";
-                $stmt = $conn->prepare($query1);
+                $query = "SELECT menu_item, price FROM menu";
+                $stmt = $conn->prepare($query);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 if($result->num_rows > 0){
