@@ -11,8 +11,10 @@ require('handle_form.php');
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css"> 
     </head>
+
     <body>
         <div class="container">
+        <h1>GEISTNASHVILLE ORDER FORM</h1>
         <form action="orderpage.php" method="POST">
         <label for="Name">Customer Name</label>
             <div class="form-row">
@@ -26,13 +28,20 @@ require('handle_form.php');
             <label for="phone number">Phone Number</label>
             <div class="form-row">
                 <div class="col">
-                    <input type="text" class="form-control" id="phoneNum" size="20" maxlength="20">
+                    <input type="text" name="phoneNum" class="form-control" placeholder="x-xxx-xxx-xxxx"  size="20" maxlength="20" value="<?php if(!empty($phone)){ echo $phone; } ?>">
+                </div>
+            </div>
+            <label for="address"> Address</label>
+            <div class="form-row">
+                <div class="col">
+                   <input type="text" name="address" class="form-control" placeholder="Address" value="<?php if(!empty($address)){ echo $address; } ?>">
                 </div>
             </div>
             <p>
                 <!-- menu taken from https://www.geistnashville.com/brunch -->
                 <label> Menu: </label>
                 <br>
+                <!-- getting the menu from database -->
                 <?php 
                 $query = "SELECT menu_item, price FROM menu";
                 $stmt = $conn->prepare($query);
@@ -41,13 +50,29 @@ require('handle_form.php');
                 if($result->num_rows > 0){
                     while($row = $result->fetch_assoc()){
                 ?>
-                <input type="checkbox" name="menu[]" value="<?php echo $row["menu_item"]; ?>"> <?php echo $row["menu_item"]." $".$row["price"]; ?>               
-                <br>
+                <input type="checkbox" id="check"  name="menu[]" value="<?php echo $row["menu_item"]; ?>"> <?php echo $row["menu_item"]." $".$row["price"]; ?>
+                <div class="col-1">
+                    <input type="number" class="form-control" name="quantity[<?php echo $row["menu_item"]; ?>]" min="0" max="5" placeholder="0"><br>
+                </div>
                 <?php 
                       }
                 }
                 ?>
             </p>
+                <!-- check if customer wants take out or dine in -->
+                <label> Take out or dine-in? </label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                        Take out
+                    </label>
+                    </div>
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                    <label class="form-check-label" for="exampleRadios2">
+                        Dine in
+                    </label>
+                </div>
             <p>
                 <input class="btn btn-dark" type="submit" name="submit" value="submit">
             </p>
@@ -67,10 +92,12 @@ require('handle_form.php');
                 <!-- if user is logged in, show: -->
                 <small> Signed in as ___ </small>
                 <!-- if user is not logged in, show: -->
-                <small>not signed in, sign up?</small>
+                <small>not signed in, log in or sign up?</small>
         </form>
         </div>
+        
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
     </body>
 </html>
