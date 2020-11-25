@@ -1,6 +1,6 @@
 <?php 
 require('../../connect/dbconnect.inc.php');
-require('order_handle_form.php');
+require('handle-forms/order_handle_form.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,22 +19,22 @@ require('order_handle_form.php');
         <label for="Name">Customer Name</label>
             <div class="form-row">
                 <div class="col">
-                    <input type="text" name="firstName" class="form-control" placeholder="First name" value=<?php if(!empty($fname)){ echo $fname; } ?>>
+                    <input type="text" name="firstName" class="form-control" placeholder="First name" value=<?php if(!empty($_SESSION['fname'])){ echo $_SESSION['fname']; } ?>>
                 </div>
                 <div class="col">
-                   <input type="text" name="lastName" class="form-control" placeholder="Last name" value=<?php if(!empty($lname)){ echo $lname; } ?>>
+                   <input type="text" name="lastName" class="form-control" placeholder="Last name" value=<?php if(!empty($_SESSION['lname'])){ echo $_SESSION['lname']; } ?>>
                 </div>
             </div>
             <label for="phone number">Phone Number</label>
             <div class="form-row">
                 <div class="col">
-                    <input type="text" name="phoneNum" class="form-control" placeholder="x-xxx-xxx-xxxx"  size="20" maxlength="20" value="<?php if(!empty($phone)){ echo $phone; } ?>">
+                    <input type="text" name="phoneNum" class="form-control" placeholder="x-xxx-xxx-xxxx"  size="20" maxlength="20" value="<?php if(!empty($_SESSION['phone'])){ echo $_SESSION['phone']; } ?>">
                 </div>
             </div>
             <label for="address"> Address</label>
             <div class="form-row">
                 <div class="col">
-                   <input type="text" name="address" class="form-control" placeholder="Address" value="<?php if(!empty($address)){ echo $address; } ?>">
+                   <input type="text" name="address" class="form-control" placeholder="Address" value="<?php if(!empty($_SESSION['address'])){ echo $_SESSION['address']; } ?>">
                 </div>
             </div>
             <p>
@@ -50,7 +50,7 @@ require('order_handle_form.php');
                 if($result->num_rows > 0){
                     while($row = $result->fetch_assoc()){
                 ?>
-                <input type="checkbox" id="check"  name="menu[]" value="<?php echo $row["menu_item"]; ?>"> <?php echo $row["menu_item"]." $".$row["price"]; ?>
+                <input type="checkbox" id="check"  name="menu[]" value="<?php echo $row["menu_item"];?>" <?php if(!empty($_SESSION['order'])){foreach(json_decode($_SESSION['order']) as $item){ if($item == $row["menu_item"]){ echo "checked"; }}}?>> <?php echo $row["menu_item"]." $".$row["price"]; ?>
                 <div class="col-1">
                     <input type="number" class="form-control" name="quantity[<?php echo $row["menu_item"]; ?>]" min="0" max="5" placeholder="0"><br>
                 </div>
@@ -73,9 +73,8 @@ require('order_handle_form.php');
                         Dine in
                     </label>
                 </div>
-            <p>
-                <input class="btn btn-dark" type="submit" name="submit" value="submit">
-            </p>
+            <input class="btn btn-primary" type="submit" name="cancel" value="Cancel">
+            <input class="btn btn-dark" type="submit" name="submit" value="submit">
                 <?php if(count($errors)>0): ?>
                     <div class="alert alert-danger" role="alert">
                     <h4 class="alert-heading">Could not order</h4>
@@ -88,16 +87,10 @@ require('order_handle_form.php');
                     </ul>
                     </div>
                 <?php endif; ?>
-                <!-- use cookies for this -->
-                <!-- if user is logged in, show: -->
-                <small> Signed in as ___ </small>
-                <!-- if user is not logged in, show: -->
-                <small>not signed in, log in or sign up?</small>
         </form>
         </div>
         
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <script src="script.js"></script>
     </body>
 </html>

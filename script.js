@@ -1,4 +1,4 @@
-function checkCheckbox(){
-    var x = document.getElementById("check").checked;
-    document.getElementById("check").innerHTML = x;
+function myFunction() {
+    var obj = document.getElementById("addItem");
+    obj.remove(); 
 }

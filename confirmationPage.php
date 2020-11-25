@@ -1,7 +1,6 @@
 <?php 
 require('../../connect/dbconnect.inc.php');
-require('handle_form.php');
-session_start();
+require('handle-forms/order_handle_form.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,8 +30,8 @@ session_start();
                                 $stmt->execute();
                                 $result = $stmt->get_result();
                                 $row = $result->fetch_assoc();
-                                echo $item."<br>";
                                 //putting the results into an array
+                                $itemArr[] = $item;
                                 $price[] = (int) $row['price'];
                             }
                             //putting the quantity into an array
@@ -41,10 +40,17 @@ session_start();
                                     $quant[] = (int) $value;
                                 }
                             }
+
                             //combining both 
                             function getValues($key, $val) {
                                 return array($key=>$val);
                              }
+                            $orderArr = array_map('getValues', $itemArr, $quant);
+                            foreach($orderArr as $order){
+                                foreach($order as $key => $value){
+                                    echo $key." x".$value."<br>"; 
+                                }
+                            }
                             $arr=array_map('getValues', $price, $quant);
                             foreach($arr as $order){
                                 foreach($order as $key => $value){
@@ -58,8 +64,16 @@ session_start();
                     echo $totalPrice;
                 ?>
 
-                <!-- confirm order or submit -->
+                <!-- confirm order or edit -->
                 <br><a href="orderpage.php">Edit Order Details</a>
+
+                <form action="confirmationPage.php" method="POST">
+                <input type="submit" name="confirm" value="confirm order">
+                <?php if(isset($_POST['confirm'])){ ?>
+                    <p> Order has been placed. </p>
+                    <a href="homepage.html">Go back to homepage</a>
+                <?php } ?>
+                </form>
         </div>
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
