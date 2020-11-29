@@ -1,5 +1,5 @@
 <?php 
-require('../../connect/dbconnect.inc.php');
+require('../../../connect/dbconnect.inc.php');
 session_start();
     //experimental: check if there are unwanted symbols in the username?
     //empty array for errors

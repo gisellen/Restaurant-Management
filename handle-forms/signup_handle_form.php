@@ -1,5 +1,5 @@
 <?php 
-require('../../connect/dbconnect.inc.php');
+require('../../../connect/dbconnect.inc.php');
 $errors = [];
 if(isset($_POST['signup'])){
     $username = htmlspecialchars($_POST['username']);

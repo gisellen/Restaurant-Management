@@ -1,5 +1,5 @@
 <?php 
-require('handle-forms/signup_handle_form.php');
+require('../handle-forms/login_handle_form.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,12 +10,12 @@ require('handle-forms/signup_handle_form.php');
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css"> 
+        <link rel="stylesheet" href="../style.css"> 
     </head>
     <body>
     <div class="container">
         <center>
-        <form action="signup.php" method="POST">
+        <form action="adminloginpage.php" method="POST">
         <div class="col-4">
             <input type="text" name="username" placeholder="username" class="form-control">
         </div>
@@ -24,19 +24,13 @@ require('handle-forms/signup_handle_form.php');
             <input type="password" name="password" placeholder="password" class="form-control">
         </div>
         <br>
-        <div class="col-4">
-            <input type="password" name="confirmPassword" placeholder="confirm password" class="form-control">
-        </div>
-        <br>
-        <div class="col-4">
-            <input type="text" name="code" placeholder="code" class="form-control">
-        </div>
-            <a class="btn btn-primary" href="homepage.html" role="button">Go Back</a>
-            <input class="btn btn-dark" type="submit" name="signup" value="signup">
+            <a class="btn btn-primary" href="../homepage.html" role="button">Go Back</a>
+            <input class="btn btn-dark" type="submit" name="login" value="login">
         </form>
+        <small>No account? <a href="signup.php">Sign up</a> with the code provided to you.</small>
         <?php if(count($errors)>0): ?>
             <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">Could not sign up</h4>
+                <h4 class="alert-heading">Could not log in</h4>
                     <ul>
                         <?php foreach($errors as $error => $description): ?>
                             <li>
