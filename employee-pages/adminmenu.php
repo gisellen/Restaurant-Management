@@ -21,6 +21,10 @@ require('../../../connect/dbconnect.inc.php');
         <br>
         <a href="orderhistory.php"><button type="button" class="btn btn-primary btn-lg btn-block">View order history</button></a>
         <br>
+        <a href="reservationspage.php"><button type="button" class="btn btn-primary btn-lg btn-block">Check Todays Reservations</button></a>
+        <br>
+        <a href="statistics.php"><button type="button" class="bt btn-primary btn-lg btn-block">Statistics</button></a>
+        <br>
         <form action="adminmenu.php" method="POST">
         <input type="submit" name="goback" value="Log out" class="btn btn-primary btn-lg btn-block">
         </form>

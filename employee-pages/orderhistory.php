@@ -1,5 +1,6 @@
 <?php
 require('../../../connect/dbconnect.inc.php');
+require('delete.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,7 @@ require('../../../connect/dbconnect.inc.php');
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css"> 
+        <link rel="stylesheet" href="../style.css"> 
     </head>
     <body>
     <div class="container">
@@ -53,18 +54,20 @@ require('../../../connect/dbconnect.inc.php');
             <th>Quantity</th>
             <th>Total price</th>
             <th>Customer</th>
+            <th>Customer ID</th>
             <th>Delete</th>
         </tr>
     <?php
     foreach($result as $orders){
         //get customer
-        $query = "SELECT first_name, last_name FROM customer WHERE CustomerID = ?";
+        $query = "SELECT CustomerID, first_name, last_name FROM customer WHERE CustomerID = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('i', $orders['CustomerID']);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         $name = $row['first_name']." ".$row['last_name'];
+        $customerID = $row['CustomerID'];
 
         //get menu item
         $query = "SELECT menu_item, price FROM menu WHERE MenuID = ?";
@@ -75,6 +78,7 @@ require('../../../connect/dbconnect.inc.php');
         $row = $result->fetch_assoc();
         $menu_item = $row['menu_item'];
         $itemTotal = $orders['quantity'] * $row['price'];
+        $id = $orders['OrderID'];
 
         echo "<tr>";
         echo "<td>".$orders['OrderID']."</td>";
@@ -82,18 +86,23 @@ require('../../../connect/dbconnect.inc.php');
         echo "<td>".$orders['quantity']."</td>";
         echo "<td>".$itemTotal."</td>";
         echo "<td>".$name."</td>";
-        echo "<td><input type='button' name='delete' value='delete'></td>";
+        echo "<td>".$customerID."</td>";
+        echo "<form method='POST' action='orderhistory.php'>";
+        echo "<td><input type='submit' name='deleteOrder' value='".$id."'></td>";
+        echo "</form>";
         echo "</tr>";
-    }
+    }   
     ?>
         </table>
         <?php
         } else{
             echo "<p>no records found</p>";
+            echo "<a href='adminmenu.php'> go back </a>";
             exit();
         }
         $stmt->close();
-        
+
+
         //page links
         if( $current_page > 1){
                 echo '<a href="orderhistory.php?page='.($current_page-1).'"><button> Previous </button></a>';
@@ -102,6 +111,7 @@ require('../../../connect/dbconnect.inc.php');
             echo '<a href="orderhistory.php?page='.($current_page+1).'"><button> Next </button></a>';
         }
         ?>
+        <br>
     <a href="adminmenu.php"><button type="button" class="btn btn-primary btn-lg btn-block">Go back</button> </a>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

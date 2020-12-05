@@ -63,7 +63,7 @@ if(isset($_POST['submit'])){
 
 if(isset($_POST['cancel'])){
     session_destroy();
-    header("Location: homepage.html");
+    header("Location: customeroption.php");
 }
 
 if(isset($_POST['confirm'])){

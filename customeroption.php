@@ -26,7 +26,7 @@
             <div class="modal-content">
             
             <div class="modal-body">
-                <form method="post" id="reservation">
+            <form method="post" id="reservation">
             <label for="address">Reservation Date</label>
                     <div class="form-row">
                         <div class="col">
