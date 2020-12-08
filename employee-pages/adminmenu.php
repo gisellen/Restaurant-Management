@@ -15,6 +15,7 @@ require('../../../connect/dbconnect.inc.php');
     </head>
     <body>
     <div class="container">
+    <h1><center>EMPLOYEE MENU</center></h1>
         <a href="modifyMenu.php"><button type="button" class="btn btn-primary btn-lg btn-block">Add, delete, or modify menu item</button></a>
         <br>
         <a href="previouscustomers.php"><input type="submit" name="prevCustomers" value="View Previous Customers" class="btn btn-primary btn-lg btn-block"></a>

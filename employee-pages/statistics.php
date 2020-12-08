@@ -2,7 +2,7 @@
 
 $year = date('Y');
 $month = date('m');
-$day = date('d',strtotime("-5 day"));
+$day = date('d',strtotime("-7 day"));
 $time = "00:00:00";
 
 $totalResults = array();
@@ -21,8 +21,7 @@ for($i = 0; $i<=7; $i++){
         }
     }
 }  
-$reverse = array_reverse($totalResults);
-$temp = json_encode($reverse)
+$temp = json_encode($totalResults)
 ?>
 <!DOCTYPE html>
 <html>

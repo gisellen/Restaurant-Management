@@ -88,7 +88,8 @@ require('delete.php');
         echo "<td>".$name."</td>";
         echo "<td>".$customerID."</td>";
         echo "<form method='POST' action='orderhistory.php'>";
-        echo "<td><input type='submit' name='deleteOrder' value='".$id."'></td>";
+        echo "<td><input type='hidden' name='deleteOrder' value='".$id."'>
+        <input type='submit' name='delete' value='DELETE'></td>";
         echo "</form>";
         echo "</tr>";
     }   
