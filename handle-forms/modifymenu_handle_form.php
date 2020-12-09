@@ -28,8 +28,8 @@ if (!function_exists('modifyItem')) {
 
 if(isset($_POST['addItemSubmit'])){
     //get values
-    $item = $_POST['itemName'];
-    $price = $_POST['itemPrice'];
+    $item = htmlspecialchars($_POST['itemName']);
+    $price = htmlspecialchars($_POST['itemPrice']);
     $query = "INSERT INTO menu (menu_item, price) VALUES (?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('si', $item, $price);
@@ -38,7 +38,7 @@ if(isset($_POST['addItemSubmit'])){
 }
 
 if(isset($_POST['deleteItemSubmit'])){
-    $id = $_POST['itemID'];
+    $id = htmlspecialchars($_POST['itemID']);
     $query = "DELETE FROM menu WHERE MenuID = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $id);
@@ -47,7 +47,7 @@ if(isset($_POST['deleteItemSubmit'])){
 }
 
 if(isset($_POST['modifyItemSubmit'])){
-    $id = $_POST['itemID'];
+    $id = htmlspecialchars($_POST['itemID']);
     $price = $_POST['price'];
     $query = "UPDATE menu SET price = ? WHERE MenuID = ?";
     $stmt = $conn->prepare($query);
