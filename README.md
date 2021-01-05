@@ -1,2 +1,2 @@
 # Restaurant-Management
-A website written in PHP integrated with a database
+A Restaurant Management website written in PHP integrated with a database.
